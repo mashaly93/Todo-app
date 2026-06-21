@@ -1,16 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:todo_app/screens/Edit_Screen.dart';
 import 'package:todo_app/shared/Taskmodel.dart';
 import 'package:todo_app/shared/firebase/firebase_manager.dart';
 
 import 'colors.dart';
 
-class TaskItem extends StatelessWidget {
+class TaskItem extends StatefulWidget {
   Taskmodel task;
 
   TaskItem(this.task);
 
+  @override
+  State<TaskItem> createState() => _TaskItemState();
+}
+
+class _TaskItemState extends State<TaskItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,7 +35,7 @@ class TaskItem extends StatelessWidget {
               children: [
                 SlidableAction(
                   onPressed: (context) {
-                    FirebaseManager.deleteTask(task.Id);
+                    FirebaseManager.deleteTask(widget.task.Id);
                   },
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(15),
@@ -41,7 +47,13 @@ class TaskItem extends StatelessWidget {
                   label: 'Delete',
                 ),
                 SlidableAction(
-                  onPressed: (context) {},
+                  onPressed: (context) {
+                    Navigator.pushNamed(
+                      context,
+                      EditScreen.routeName,
+                      arguments:  widget.task
+                    );
+                  },
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(15),
                     topLeft: Radius.circular(15),
@@ -67,18 +79,29 @@ class TaskItem extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 20),
                   child: Column(
                     children: [
-                      Text(task.Title, style: TextStyle(color: blue)),
-                      Text(task.Description),
+                      Text(widget.task.Title, style: TextStyle(color: blue)),
+                      Text(widget.task.Description),
                     ],
                   ),
                 ),
-                Container(
-                  width: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: blue,
+                InkWell(
+                  onTap: () {
+                    widget.task.Isdone = true;
+                    setState(() {});
+                  },
+                  child: Container(
+                    width: 45,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+
+                      color: widget.task.Isdone == true
+                          ? Colors.green
+                          : Colors.blue,
+                    ),
+                    child: widget.task.Isdone == true
+                        ? Text(' Done!', style: TextStyle(fontSize: 15))
+                        : Icon(Icons.done, color: Colors.white, size: 30),
                   ),
-                  child: Icon(Icons.done, color: Colors.white, size: 30),
                 ),
               ],
             ),

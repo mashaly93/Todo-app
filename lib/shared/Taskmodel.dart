@@ -2,14 +2,14 @@ class Taskmodel {
   String Title;
   String Description;
   String Id = '';
-  bool? Isdone = false;
+  bool Isdone = false;
   int Date;
 
   Taskmodel({
     required this.Title,
     required this.Description,
     required this.Id,
-    this.Isdone,
+    required this.Isdone,
     required this.Date,
   });
 
@@ -18,7 +18,7 @@ class Taskmodel {
       Title: data['Title'],
       Description: data['Description'],
       Id: data['Id'],
-      Isdone: data['Isdone'],
+      Isdone: data['Isdone'] as bool? ?? false,
       Date: data['Date'],
     );
   }

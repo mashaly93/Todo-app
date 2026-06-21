@@ -194,6 +194,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                 style: ElevatedButton.styleFrom(backgroundColor: blue),
                 onPressed: () {
                   Taskmodel task = Taskmodel(
+                    Isdone: false,
                     Title: Taskcontroller.text,
                     Description: Discriptioncotroller.text,
                     Date: DateUtils.dateOnly(currentDate).millisecondsSinceEpoch, Id: '',

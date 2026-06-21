@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/layout/home.dart';
+import 'package:todo_app/screens/Edit_Screen.dart';
 import 'package:todo_app/shared/MythemData.dart';
 
 import 'firebase_options.dart';
@@ -21,8 +22,11 @@ void main()async {
         debugShowCheckedModeBanner: false,
         initialRoute: HomeLayout.routeName,
         routes:{
+          EditScreen.routeName:(context){
+            return EditScreen();
+          }
 
-          HomeLayout.routeName:(context){
+          ,HomeLayout.routeName:(context){
             return HomeLayout();
           }
         } ,
